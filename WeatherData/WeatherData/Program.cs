@@ -18,9 +18,9 @@
             //    }
             //}
 
-            ManipulateData.OutdoorsData();
+            //ManipulateData.OutdoorsAverage();
 
-
+            ManipulateData.outdoorsMinMax();
 
         }
     }

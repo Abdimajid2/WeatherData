@@ -20,7 +20,7 @@
 
             //ManipulateData.OutdoorsAverage();
 
-            ManipulateData.outdoorsMinMax();
+            ManipulateData.OutdoorsMinMax();
 
         }
     }

@@ -4,23 +4,24 @@
     {
         static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             var rowcount = 0;
 
-            var matches =  CollectData.ReadAll("tempdata5-med fel.txt");
-            foreach (var match in matches)
-            {
+
+            //foreach (var match in matches)
+            //{
+            //    foreach (var item in match)
+            //    {
+            //        Console.WriteLine(rowcount + " " + item);
+            //        rowcount++;
+            //    }
+            //}
+
+            ManipulateData.OutdoorsData();
 
 
-                foreach (var item in match)
-                {
 
-                    Console.WriteLine(rowcount + " " + item);
-                    rowcount++;
-
-                }
-
-            }
-                        
         }
     }
 }

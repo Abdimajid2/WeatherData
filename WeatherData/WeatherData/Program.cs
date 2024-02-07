@@ -20,7 +20,10 @@
 
             //ManipulateData.OutdoorsAverage();
 
-            ManipulateData.OutdoorsMinMax();
+            //ManipulateData.OutdoorsMinMax();
+
+            ManipulateData.Autumn();
+            ManipulateData.Winter();
 
         }
     }

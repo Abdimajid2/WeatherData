@@ -97,17 +97,19 @@ namespace WeatherData
                     Humidity = double.Parse(match.Groups["Humidity"].Value)
                 });
 
-            var averageTempPerDay = data
+            var averageValuesPerDay = data
                 .Where(s => s.Sensor == "Ute")
                 .GroupBy(d => d.Date)
                 .Select(v => new
                 {
                     Date = v.Key,
                     AvegerageTemp = v.Average(t => t.Temperature),
-                    AverageHumidity = v.Average(h => h.Humidity)
+                    AverageHumidity = v.Average(h => h.Humidity),
+                    AverageRiskForMold = v.Average(m => ((m.Humidity - 78) * (m.Temperature / 15) / 0.22))
                 });
 
-            var tempDesc = averageTempPerDay
+            //Average temperature per day
+            var tempDesc = averageValuesPerDay
                 .OrderByDescending(t => t.AvegerageTemp);
 
             Console.WriteLine("Average temperature (descending order)");
@@ -117,7 +119,8 @@ namespace WeatherData
             }
             Console.WriteLine();
 
-            var humidityAsc = averageTempPerDay
+            //Average humidity per day
+            var humidityAsc = averageValuesPerDay
                 .OrderBy(h => h.AverageHumidity);
 
             Console.WriteLine("Average humidity (ascending order)");
@@ -126,6 +129,123 @@ namespace WeatherData
                 Console.WriteLine($"\t{h.Date}, {Math.Round(h.AverageHumidity, 2)}%");
             }
             Console.WriteLine();
+
+            //Average mold risk per day
+            var moldRiskAsc = averageValuesPerDay
+                .OrderBy(m => m.AverageRiskForMold);
+
+            Console.WriteLine("Average risk for mold (ascending order)");
+            foreach (var m in moldRiskAsc)
+            {
+                if (m.AverageRiskForMold > 0.0)
+                {
+                    Console.WriteLine($"\t{m.Date}, {Math.Round(m.AverageRiskForMold, 2)}%");
+                }
+                else
+                {
+                    Console.WriteLine($"\t{m.Date}, no risk for mold");
+                }
+            }
+            Console.WriteLine();
+        }
+
+        public static void Autumn()
+        {
+            char degreeSymbol = '\u00B0';
+            int consecutiveAutumnDays = 0;
+            int consecutiveWinterDays = 0;
+            var matches = CollectData.ReadAll("tempdata5-med fel.txt");
+
+            var data = matches
+                .SelectMany(matchCollection => matchCollection).Cast<Match>()
+                .Select(match => new
+                {
+                    Date = match.Groups["Date"].Value,
+                    Sensor = match.Groups["Sensor"].Value,
+                    Temperature = double.Parse((match.Groups["Temp"].Value)),
+                });
+
+            var averageValuesPerDay = data
+                .Where(s => s.Sensor == "Ute")
+                .GroupBy(d => d.Date)
+                .Select(v => new
+                {
+                    Date = DateOnly.Parse(v.Key),
+                    AvegerageTemp = v.Average(t => t.Temperature),
+                });
+
+            //First meteorological autumn day
+
+            foreach (var t in averageValuesPerDay)
+            {
+                if (t.AvegerageTemp < 10.0)
+                {
+                    consecutiveAutumnDays++;
+                }
+                else
+                {
+                    consecutiveAutumnDays = 0;
+                }
+
+                if (consecutiveAutumnDays == 5)
+                {
+
+                    Console.WriteLine($"{t.Date.AddDays(-4).ToString("yyyy-MM-dd")} was the first day of meteorological autumn with an average temperature of {Math.Round(t.AvegerageTemp, 2)}{degreeSymbol}C.");
+                    break;
+                }
+            }
+        }
+
+        public static void Winter()
+        {
+            char degreeSymbol = '\u00B0';
+            int consecutiveAutumnDays = 0;
+            int consecutiveWinterDays = 0;
+            var matches = CollectData.ReadAll("tempdata5-med fel.txt");
+
+            var data = matches
+                .SelectMany(matchCollection => matchCollection).Cast<Match>()
+                .Select(match => new
+                {
+                    Date = match.Groups["Date"].Value,
+                    Sensor = match.Groups["Sensor"].Value,
+                    Temperature = double.Parse((match.Groups["Temp"].Value)),
+                });
+
+            var averageValuesPerDay = data
+                .Where(s => s.Sensor == "Ute")
+                .GroupBy(d => d.Date)
+                .Select(v => new
+                {
+                    Date = DateOnly.Parse(v.Key),
+                    AvegerageTemp = v.Average(t => t.Temperature),
+                });
+
+            //First meteorological winter day
+            foreach (var t in averageValuesPerDay)
+            {
+                if (t.AvegerageTemp <= 0.0)
+                {
+                    consecutiveWinterDays++;
+                }
+                else
+                {
+                    consecutiveWinterDays = 0;
+                }
+
+                if (consecutiveWinterDays == 5)
+                {
+
+                    Console.WriteLine($"{t.Date.AddDays(-4).ToString("yyyy-MM-dd")} was the first day of meteorological winter with an average temperature of {Math.Round(t.AvegerageTemp, 2)}{degreeSymbol}C.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("No winter this year");
+                    Console.ReadLine();
+                    break;
+                }
+            }
         }
     }
 }

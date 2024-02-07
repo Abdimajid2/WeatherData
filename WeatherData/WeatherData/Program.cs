@@ -22,8 +22,12 @@
 
             //ManipulateData.OutdoorsMinMax();
 
-            ManipulateData.Autumn();
-            ManipulateData.Winter();
+            //ManipulateData.Autumn();
+            //ManipulateData.Winter();
+
+            //ManipulateData.IndoorsAverage();
+
+            ManipulateData.IndoorsMinMax();
 
         }
     }

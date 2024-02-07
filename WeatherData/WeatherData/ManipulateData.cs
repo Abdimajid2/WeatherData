@@ -195,7 +195,6 @@ namespace WeatherData
                 }
             }
         }
-
         public static void Winter()
         {
             char degreeSymbol = '\u00B0';
@@ -246,6 +245,133 @@ namespace WeatherData
                     break;
                 }
             }
+        }
+
+        public static void IndoorsAverage()
+        {
+
+            char degreeSymbol = '\u00B0';
+            while (true)
+            {
+
+
+                Console.Clear();
+                Console.WriteLine("Please enter a date for the readings you want to see:");
+                string date = Console.ReadLine();
+
+                Regex regex = new Regex(@"^(?<Date>(?<Year>2016)-\b(?<Month>0[6-9]|1[0-2])\b-(?<Day>\d{2}))$");
+                var matches = CollectData.ReadAll("tempdata5-med fel.txt");
+                if (regex.IsMatch(date))
+                {
+                    var data = matches.SelectMany(matchCollection => matchCollection).Cast<Match>()
+                        .Where(match => match.Groups["Date"].Value == date)
+                        .Select(match => new
+                        {
+                            Date = match.Groups["Date"].Value,
+                            Sensor = match.Groups["Sensor"].Value,
+                            Temperature = double.Parse((match.Groups["Temp"].Value)),
+                            Humidity = double.Parse(match.Groups["Humidity"].Value)
+                        });
+
+                    var averageTempPerDay = data
+                        .Where(s => s.Sensor == "Inne")
+                        .GroupBy(d => d.Date)
+                        .Select(v => new
+                        {
+                            Date = v.Key,
+                            AvegerageTemp = v.Average(t => t.Temperature),
+                            AverageHumidity = v.Average(h => h.Humidity)
+                        });
+
+                    if (averageTempPerDay.Any())
+                    {
+                        foreach (var t in averageTempPerDay)
+                        {
+                            Console.WriteLine($"Average temperature and humidity for {t.Date}:");
+                            Console.WriteLine($"   Temperature: {Math.Round(t.AvegerageTemp, 2)}{degreeSymbol}C");
+                            Console.WriteLine($"   Humidity: {Math.Round(t.AverageHumidity, 2)}%");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No match found for this date");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect format");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back");
+                Console.ReadKey();
+            }
+        }
+
+        public static void IndoorsMinMax()
+        {
+            char degreeSymbol = '\u00B0';
+            var matches = CollectData.ReadAll("tempdata5-med fel.txt");
+
+            var data = matches
+                .SelectMany(matchCollection => matchCollection).Cast<Match>()
+                .Select(match => new
+                {
+                    Date = match.Groups["Date"].Value,
+                    Sensor = match.Groups["Sensor"].Value,
+                    Temperature = double.Parse((match.Groups["Temp"].Value)),
+                    Humidity = double.Parse(match.Groups["Humidity"].Value)
+                });
+
+            var averageValuesPerDay = data
+                .Where(s => s.Sensor == "Inne")
+                .GroupBy(d => d.Date)
+                .Select(v => new
+                {
+                    Date = v.Key,
+                    AvegerageTemp = v.Average(t => t.Temperature),
+                    AverageHumidity = v.Average(h => h.Humidity),
+                    AverageRiskForMold = v.Average(m => ((m.Humidity - 78) * (m.Temperature / 15) / 0.22))
+                });
+
+            //Average temperature per day
+            var tempDesc = averageValuesPerDay
+                .OrderByDescending(t => t.AvegerageTemp);
+
+            Console.WriteLine("Average temperature (descending order)");
+            foreach (var t in tempDesc)
+            {
+                Console.WriteLine($"   {t.Date}, {Math.Round(t.AvegerageTemp, 2)}{degreeSymbol}C");
+            }
+            Console.WriteLine();
+
+            //Average humidity per day
+            var humidityAsc = averageValuesPerDay
+                .OrderBy(h => h.AverageHumidity);
+
+            Console.WriteLine("Average humidity (ascending order)");
+            foreach (var h in humidityAsc)
+            {
+                Console.WriteLine($"\t{h.Date}, {Math.Round(h.AverageHumidity, 2)}%");
+            }
+            Console.WriteLine();
+
+            //Average mold risk per day
+            var moldRiskAsc = averageValuesPerDay
+                .OrderBy(m => m.AverageRiskForMold);
+
+            Console.WriteLine("Average risk for mold (ascending order)");
+            foreach (var m in moldRiskAsc)
+            {
+                if (m.AverageRiskForMold > 0.0)
+                {
+                    Console.WriteLine($"\t{m.Date}, {Math.Round(m.AverageRiskForMold, 2)}%");
+                }
+                else
+                {
+                    Console.WriteLine($"\t{m.Date}, no risk for mold");
+                }
+            }
+            Console.WriteLine();
         }
     }
 }

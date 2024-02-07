@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace WeatherData
 {
@@ -28,12 +22,12 @@ namespace WeatherData
                 });
 
             var averageValuesPerMonth = data
-                 
-                .GroupBy(d => new {d.Month, d.Sensor})
+
+                .GroupBy(d => new { d.Month, d.Sensor })
                 .Select(v => new
                 {
-               
-                    Month = v.Key,
+                    Month = v.Key.Month,
+                    Sensor = v.Key.Sensor,
                     AvegerageTemp = v.Average(t => t.Temperature),
                     AverageHumidity = v.Average(h => h.Humidity),
                     AverageRiskForMold = v.Average(m => ((m.Humidity - 78) * (m.Temperature / 15) / 0.22))
@@ -43,19 +37,15 @@ namespace WeatherData
 
 
             string filename = "AveragePerMonth.txt";
-            using (StreamWriter writer = new StreamWriter(path + filename, true))
+            using (StreamWriter writer = new StreamWriter(path + filename))
             {
 
                 writer.WriteLine("Average temperature per month(descending order)");
                 foreach (var t in tempDesc)
                 {
-                    writer.WriteLine($"   {t.Month}, {Math.Round(t.AvegerageTemp, 2)}  {degreeSymbol}C");
+                    writer.WriteLine($"{t.Sensor} - Month: {t.Month}, {Math.Round(t.AvegerageTemp, 2)} {degreeSymbol}C");
                 }
-
             }
         }
-
-
-
     }
 }

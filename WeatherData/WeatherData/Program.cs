@@ -27,7 +27,9 @@
 
             //ManipulateData.IndoorsAverage();
 
-            ManipulateData.IndoorsMinMax();
+            //ManipulateData.IndoorsMinMax();
+
+            WriteData.WriteAll();
 
         }
     }

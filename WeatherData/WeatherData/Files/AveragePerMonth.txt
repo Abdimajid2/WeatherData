@@ -1,0 +1,39 @@
+Average temperature per month(descending order)
+   12, 14.73°C
+   11, 15.36°C
+   10, 15.7°C
+   09, 20.01°C
+   08, 18.71°C
+   07, 23.17°C
+   06, 21°C
+Average temperature per month(descending order)
+   12, 14.73 12 °C
+   11, 15.36 11 °C
+   10, 15.7 10 °C
+   09, 20.01 09 °C
+   08, 18.71 08 °C
+   07, 23.17 07 °C
+   06, 21 06 °C
+Average temperature per month(descending order)
+   07, 23.17  °C
+   06, 21  °C
+   09, 20.01  °C
+   08, 18.71  °C
+   10, 15.7  °C
+   11, 15.36  °C
+   12, 14.73  °C
+Average temperature per month(descending order)
+   { Month = 07, Sensor = Inne }, 26.28  °C
+   { Month = 08, Sensor = Inne }, 25.57  °C
+   { Month = 06, Sensor = Inne }, 24.7  °C
+   { Month = 09, Sensor = Inne }, 23.31  °C
+   { Month = 11, Sensor = Inne }, 22.78  °C
+   { Month = 10, Sensor = Inne }, 22.41  °C
+   { Month = 12, Sensor = Inne }, 21.84  °C
+   { Month = 07, Sensor = Ute }, 20.24  °C
+   { Month = 08, Sensor = Ute }, 18.07  °C
+   { Month = 09, Sensor = Ute }, 16.16  °C
+   { Month = 06, Sensor = Ute }, 15.85  °C
+   { Month = 10, Sensor = Ute }, 8.18  °C
+   { Month = 11, Sensor = Ute }, 4.45  °C
+   { Month = 12, Sensor = Ute }, 3.58  °C

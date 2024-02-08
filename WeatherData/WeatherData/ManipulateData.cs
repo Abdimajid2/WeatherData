@@ -77,9 +77,17 @@ namespace WeatherData
                     Console.WriteLine("Incorrect format");
                 }
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back");
-                Console.ReadKey();
+                Console.WriteLine("Press any key to try again");
+                Console.WriteLine("Press 'M' to go back to the main menu");
+                ConsoleKeyInfo mainmenu = Console.ReadKey();
+                if (mainmenu.KeyChar == 'm')
+                {
+                    break;
+                }
+
             }
+            Console.Clear();
+            Program.Outdoors();
         }
 
         public static void OutdoorsMinMax()
@@ -147,6 +155,13 @@ namespace WeatherData
                 }
             }
             Console.WriteLine();
+            Console.WriteLine("Press 'M' to go back to the main menu");
+            ConsoleKeyInfo mainmenu = Console.ReadKey();
+            if (mainmenu.KeyChar == 'm')
+            {
+                Console.Clear();
+                Program.Outdoors();
+            }
         }
 
         public static void Autumn()
@@ -299,12 +314,20 @@ namespace WeatherData
                 }
                 else
                 {
-                    Console.WriteLine("Incorrect format");
+                    Console.WriteLine("Incorrect format. Press any key to try again or 'M' to go back to the main menu");
                 }
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back");
-                Console.ReadKey();
+                Console.WriteLine("Press any key to try again");
+                Console.WriteLine("Press 'M' to go back to the main menu");
+                ConsoleKeyInfo mainmenu = Console.ReadKey();
+                if (mainmenu.KeyChar == 'm')
+                {
+                    break;
+                }
+
             }
+            Console.Clear();
+            Program.TempMenu();
         }
 
         public static void IndoorsMinMax()
@@ -372,6 +395,13 @@ namespace WeatherData
                 }
             }
             Console.WriteLine();
+            Console.WriteLine("Press 'M' to go back to the menu");
+            ConsoleKeyInfo mainmenu = Console.ReadKey();
+            if (mainmenu.KeyChar == 'm')
+            {
+                Console.Clear();
+                Program.Outdoors();
+            }
         }
     }
 }

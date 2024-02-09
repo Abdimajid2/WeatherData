@@ -35,7 +35,6 @@ namespace WeatherData
             var tempDesc = averageValuesPerMonth
                 .OrderByDescending(t => t.AvegerageTemp);
 
-
             string filename = "AveragePerMonth.txt";
             using (StreamWriter writer = new StreamWriter(path + filename))
             {

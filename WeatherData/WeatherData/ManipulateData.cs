@@ -168,7 +168,6 @@ namespace WeatherData
         {
             char degreeSymbol = '\u00B0';
             int consecutiveAutumnDays = 0;
-            int consecutiveWinterDays = 0;
             var matches = CollectData.ReadAll("tempdata5-med fel.txt");
 
             var data = matches
@@ -209,12 +208,14 @@ namespace WeatherData
                     break;
                 }
             }
+            Console.ReadLine();
         }
+
         public static void Winter()
         {
             char degreeSymbol = '\u00B0';
-            int consecutiveAutumnDays = 0;
             int consecutiveWinterDays = 0;
+            int consecutiveClosestToWinter = 0;
             var matches = CollectData.ReadAll("tempdata5-med fel.txt");
 
             var data = matches
@@ -235,6 +236,8 @@ namespace WeatherData
                     AvegerageTemp = v.Average(t => t.Temperature),
                 });
 
+            var coldestAboveZero = averageValuesPerDay.OrderBy(t => t.AvegerageTemp).FirstOrDefault();
+
             //First meteorological winter day
             foreach (var t in averageValuesPerDay)
             {
@@ -253,13 +256,13 @@ namespace WeatherData
                     Console.WriteLine($"{t.Date.AddDays(-4).ToString("yyyy-MM-dd")} was the first day of meteorological winter with an average temperature of {Math.Round(t.AvegerageTemp, 2)}{degreeSymbol}C.");
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("No winter this year");
-                    Console.ReadLine();
-                    break;
-                }
             }
+
+            if (consecutiveWinterDays < 5)
+            {
+                Console.WriteLine($"No winter this year as the daily average temperature was never equal to or below zero. Closest day was {coldestAboveZero.Date.ToString("yyyy-MM-dd")} with an average temperature of {Math.Round(coldestAboveZero.AvegerageTemp, 2)}{degreeSymbol}C.");
+            }
+            Console.ReadLine();
         }
 
         public static void IndoorsAverage()

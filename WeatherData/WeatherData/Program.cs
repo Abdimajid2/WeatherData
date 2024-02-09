@@ -38,6 +38,7 @@
 
         public static void TempMenu()
         {
+            Console.Clear();
             Console.WriteLine("Choose the information you would like to see");
             Console.WriteLine("1. View information for outdoors");
             Console.WriteLine("2. View information for indoors");
@@ -48,7 +49,7 @@
             switch (choice)
             {
                 case "1":
-                    Console.Clear();    
+                    Console.Clear();
                     Outdoors();
                     break;
                 case "2":
@@ -68,9 +69,9 @@
             }
         }
 
-       public static void Outdoors()
+        public static void Outdoors()
         {
-            Console.WriteLine("choose the information you would like to see for outdoors");
+            Console.WriteLine("Choose the information you would like to see for outdoors");
             Console.WriteLine("1.View average temperature and humidity for a specific date");
             Console.WriteLine("2.Daily average information");
 
@@ -84,7 +85,7 @@
                 case "2":
                     Console.Clear();
                     ManipulateData.OutdoorsMinMax();
-                    break;                 
+                    break;
             }
         }
 

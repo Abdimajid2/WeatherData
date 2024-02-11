@@ -92,6 +92,7 @@ namespace WeatherData
 
         public static void OutdoorsMinMax()
         {
+            Console.Clear();
             char degreeSymbol = '\u00B0';
             var matches = CollectData.ReadAll("tempdata5-med fel.txt");
 
@@ -188,6 +189,8 @@ namespace WeatherData
                     AvegerageTemp = v.Average(t => t.Temperature),
                 });
 
+            var coldestFromTen = averageValuesPerDay.OrderBy(t => t.AvegerageTemp >= 10).FirstOrDefault();
+
             //First meteorological autumn day
 
             foreach (var t in averageValuesPerDay)
@@ -208,6 +211,11 @@ namespace WeatherData
                     break;
                 }
             }
+            if (consecutiveAutumnDays < 5)
+            {
+                Console.WriteLine($"No autumn this year as the daily average temperature was never equal to or below zero. Closest day was {coldestFromTen.Date.ToString("yyyy-MM-dd")} with an average temperature of {Math.Round(coldestFromTen.AvegerageTemp, 2)}{degreeSymbol}C.");
+            }
+
             Console.ReadLine();
         }
 
@@ -329,12 +337,12 @@ namespace WeatherData
                 }
 
             }
-            Console.Clear();
             Program.TempMenu();
         }
 
         public static void IndoorsMinMax()
         {
+            Console.Clear();
             char degreeSymbol = '\u00B0';
             var matches = CollectData.ReadAll("tempdata5-med fel.txt");
 

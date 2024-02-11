@@ -13,3 +13,40 @@ Ute - Month: 06, 15.85 °C
 Ute - Month: 10, 8.18 °C
 Ute - Month: 11, 4.45 °C
 Ute - Month: 12, 3.58 °C
+
+Average humidity per month(ascending order)
+Inne - Month: 12, 15.82%
+Inne - Month: 11, 19.07%
+Inne - Month: 10, 27.27%
+Inne - Month: 06, 28.76%
+Inne - Month: 08, 34.6%
+Inne - Month: 09, 41.6%
+Inne - Month: 07, 41.63%
+Ute - Month: 08, 48.6%
+Ute - Month: 07, 52.99%
+Ute - Month: 06, 53.21%
+Ute - Month: 09, 60.43%
+Ute - Month: 10, 64.58%
+Ute - Month: 12, 78.79%
+Ute - Month: 11, 82.89%
+
+Average risk for mold per month(ascending order)
+Inne - Month: 12, No risk for mold
+Inne - Month: 11, No risk for mold
+Inne - Month: 06, No risk for mold
+Inne - Month: 10, No risk for mold
+Inne - Month: 08, No risk for mold
+Inne - Month: 07, No risk for mold
+Inne - Month: 09, No risk for mold
+Ute - Month: 08, No risk for mold
+Ute - Month: 07, No risk for mold
+Ute - Month: 06, No risk for mold
+Ute - Month: 09, No risk for mold
+Ute - Month: 10, No risk for mold
+Ute - Month: 12, 2.26%
+Ute - Month: 11, 4.88%
+Formula for mold: ((luftfuktighet -78) * (Temp/15))/0,22
+
+2016-10-04 was the first day of meteorological autumn with an average temperature of 8.4°C.
+
+No winter this year as the daily average temperature was never equal to or below zero. Closest day was 2016-12-12 with an average temperature of 0.01°C.
